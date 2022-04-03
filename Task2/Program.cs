@@ -15,7 +15,7 @@ public class Example
 
     public static void Main()
     {
-        Exception exception = new Exception("Собственное исключения");
+      
         Console.WriteLine("Введите 5 фамилий");
 
         String[] words = new string[5];
@@ -43,7 +43,7 @@ public class Example
         {
             Console.WriteLine("Введите тип сортировки 1 или 2");
             string? str = Console.ReadLine();
-            if (str != "1" || str != "2")
+            if (str != "1" && str != "2")
             {
                 throw new Exception("Что-то вы не то выбрали");
             }
@@ -83,7 +83,7 @@ public class Example
         }
         Console.WriteLine();
     }
-    static string TryGetValue(string message) // метод на проверку пустого значения, нам же не нужны пустые значения
+    static string TryGetValue(string message) 
     {
         while (true)
         {
