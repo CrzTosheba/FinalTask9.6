@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Task2.Exceptions;
 
 public class ReverseComparer : IComparer
 {
@@ -38,40 +39,49 @@ public class Example
         DisplayValues(words);
 
 
+        while (true)
+            try
+            {
+                string? str = UserMenu();
+                   
 
-        try
-        {
-            Console.WriteLine("Введите тип сортировки 1 или 2");
-            string? str = Console.ReadLine();
-            if (str != "1" && str != "2")
-            {
-                throw new Exception("Что-то вы не то выбрали");
-            }
-            else
-            {
                 if (str == "1")
                 {
                     // Сортируем весь массив, используя компаратор по умолчанию
-                    Array.Sort(words);
                     Console.WriteLine("Сортировка по умолчанию:");
-                    DisplayValues(words);
+                    Array.Sort(words);
+
                 }
                 else if (str == "2")
-
                 {
                     // Сортируем весь массив с помощью обратного компаратора
-                    Array.Sort(words, revComparer);
                     Console.WriteLine("Сортировка в обратном порядке:");
-                    DisplayValues(words);
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"Ошибка: {e.Message}");
-        }
-        Console.ReadLine();
+                    Array.Sort(words, revComparer);
+                } else
+                    throw new InputException("Что-то вы не то выбрали");
 
+                DisplayValues(words);
+            }
+            catch (ExitException e) 
+            {
+                break;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Ошибка: {e.Message}");
+            }
+       // Console.ReadLine();
+
+    }
+
+    private static string? UserMenu()
+    {
+        Console.WriteLine("Введите тип сортировки 1 или 2");
+        Console.WriteLine("Для выхода введите '-q'");
+        string? str = Console.ReadLine();
+        if (str == "-q")
+            throw new ExitException();
+        return str;
     }
 
     public static void DisplayValues(String[] arr)
